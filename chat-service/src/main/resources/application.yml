@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
+  application:
+    name: chat-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat
+    username: postgres
+    password: postgres
