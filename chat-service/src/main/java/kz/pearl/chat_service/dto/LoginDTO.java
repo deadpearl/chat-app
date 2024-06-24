@@ -4,10 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@ToString
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDTO implements Serializable {

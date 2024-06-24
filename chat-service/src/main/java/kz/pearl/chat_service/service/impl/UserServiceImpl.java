@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,24 +33,38 @@ public class UserServiceImpl implements UserService {
                 .id(null)
                 .email(userDTO.getEmail())
                 .password(userDTO.getPassword())
+                .active(false)
                 .registerDate(LocalDateTime.now()).build();
         userRepository.save(user);
     }
     @Override
     public TokenDTO authenticateUser(LoginDTO loginDTO) {
         User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow();
-        if (!(passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))) {
-            throw new InternalException("Неправильный пароль");
+        if ((passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))) {
+            user.setActive(true);
+            userRepository.save(user);
+            return tokenService.getToken(loginDTO.getEmail(), loginDTO.getPassword());
         }
-        return tokenService.getToken(loginDTO.getEmail(), loginDTO.getPassword());
+        throw new InternalException("Неправильный пароль");
     }
     @Override
     public List<UserDTO> getActiveUsers() {
-        // Fetch active users
-        return null;
+        return userRepository.findByActiveTrue().stream()
+                .map(user -> {
+                    UserDTO dto = new UserDTO();
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findByEmail(username).orElseThrow();
+    }
+    public void setUserInactive(String username) {
+        userRepository.findByEmail(username).ifPresent(user -> {
+            user.setActive(false);
+            userRepository.save(user);
+        });
     }
 }

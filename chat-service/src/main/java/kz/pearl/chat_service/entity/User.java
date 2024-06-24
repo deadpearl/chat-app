@@ -5,17 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+
+@Data
 @Entity
-@Table(name = "_users")
-@Getter
-@Setter
 @Builder
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "_users")
 public class User {
 
     @Id
@@ -25,15 +23,7 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-
+    private boolean active;
     @Column(name = "registration_date")
     private LocalDateTime registerDate;
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
