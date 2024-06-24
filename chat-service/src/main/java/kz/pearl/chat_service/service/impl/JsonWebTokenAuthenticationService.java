@@ -50,7 +50,6 @@ public class JsonWebTokenAuthenticationService implements TokenAuthenticationSer
         if (tokenData != null) {
             User user = getUserFromToken(tokenData);
             if (user != null) {
-//                System.out.println("isTokenExpired(token) = " + isTokenExpired(token));
                 if (!isTokenExpired(token)) {
                     return new UserAuthentication(user, this.usersService, token);
                 } else {
@@ -58,11 +57,6 @@ public class JsonWebTokenAuthenticationService implements TokenAuthenticationSer
                 }
             }
         }
-
-//        else {
-//            throw new ServiceException("Token was expired", this.getClass().getName());
-//        }
-
         return null;
     }
 

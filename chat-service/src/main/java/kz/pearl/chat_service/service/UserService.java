@@ -12,5 +12,6 @@ public interface UserService {
     TokenDTO authenticateUser(LoginDTO loginDTO);
     List<UserDTO> getActiveUsers();
     User findUserByUsername(String username);
+    void setUserInactive(String username);
 
 }
