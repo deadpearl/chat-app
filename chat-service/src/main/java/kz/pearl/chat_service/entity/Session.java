@@ -1,17 +1,16 @@
 package kz.pearl.chat_service.entity;
 
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 
 
 @Getter
 @Setter
 @Entity
-@Table(name = "_session", schema = "auth")
+@Table(name = "_session")
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Session {
 

@@ -3,7 +3,10 @@ package kz.pearl.chat_service.dto;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ChatMessage {
     private MessageType type;
