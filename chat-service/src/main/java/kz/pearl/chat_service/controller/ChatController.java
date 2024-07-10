@@ -2,6 +2,8 @@ package kz.pearl.chat_service.controller;
 
 import kz.pearl.chat_service.dto.ChatMessage;
 import kz.pearl.chat_service.service.ChatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class ChatController {
+    private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
     @Autowired
     private ChatService chatService;
@@ -26,7 +29,7 @@ public class ChatController {
     public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         chatMessage.setType(ChatMessage.MessageType.JOIN);
-        System.out.println("User " + chatMessage.getSender() + " joined the chat.");
+        logger.info("User {} joined the chat.", chatMessage.getSender());
         return chatMessage;
     }
 }
